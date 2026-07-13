@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You, Nesumi</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(-45deg, #2b1810, #d4a373, #5c3d2e, #fefae0);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #ffffff;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .wave-line {
+            position: absolute;
+            width: 250%;
+            height: 350px;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.12;
+            border-top: 40px solid #D8BFD8; 
+            filter: blur(6px) drop-shadow(0 0 20px rgba(216, 191, 216, 0.5));
+            border-radius: 40% 48% 38% 45%;
+        }
+
+        .line-1 { top: -5%; left: -60%; animation: wave1 12s infinite linear alternate; }
+        .line-2 { top: 20%; left: -40%; animation: wave2 16s infinite linear alternate; border-top-width: 35px; }
+        .line-3 { top: 45%; left: -70%; animation: wave1 20s infinite linear alternate; border-top-width: 45px; }
+        .line-4 { bottom: 20%; left: -30%; animation: wave2 14s infinite linear alternate; border-top-width: 30px; }
+        .line-5 { bottom: -10%; left: -50%; animation: wave1 18s infinite linear alternate; border-top-width: 50px; }
+
+        @keyframes wave1 {
+            0% { transform: rotate(-5deg) translate3d(0, 0, 0); }
+            100% { transform: rotate(5deg) translate3d(-100px, 40px, 0); }
+        }
+
+        @keyframes wave2 {
+            0% { transform: rotate(185deg) translate3d(0, 0, 0); }
+            100% { transform: rotate(175deg) translate3d(80px, -40px, 0); }
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,253,245,0.25) 0%, rgba(0,0,0,0) 70%);
+            pointer-events: none; 
+            z-index: 2;
+            animation: lightFlicker 6s infinite alternate ease-in-out;
+        }
+
+        @keyframes lightFlicker {
+            0% { opacity: 0.4; transform: scale(0.95); }
+            30% { opacity: 0.8; transform: scale(1.05); }
+            65% { opacity: 0.5; transform: scale(0.98); }
+            100% { opacity: 0.9; transform: scale(1.02); }
+        }
+
+        .photo-frame {
+            position: relative;
+            z-index: 3;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 18px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 340px;
+            width: 100%;
+            margin-bottom: 25px;
+            box-sizing: border-box;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-frame:hover { transform: scale(1.02) rotate(1deg); }
+
+        .photo-area {
+            width: 100%;
+            height: 360px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .photo-area img { width: 100%; height: 100%; object-fit: cover; }
+        .placeholder-text { color: rgba(255, 255, 255, 0.4); font-size: 0.9rem; letter-spacing: 1px; }
+
+        .photo-message {
+            margin-top: 15px;
+            font-size: 1.05rem;
+            line-height: 1.4;
+            color: #fefae0;
+            font-weight: 500;
+            text-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
+            padding: 0 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        /* Careening (Beating & Tilting) Heart Animation */
+        .careening-heart {
+            display: inline-block;
+            animation: heartbeat 1.2s infinite ease-in-out alternate;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.15) rotate(-5deg); }
+            100% { transform: scale(1) rotate(5deg); }
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 3;
+        }
+
+        .nav-btn {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 12px 26px;
+            font-size: 1rem;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="page2-music" loop preload="auto">
+        <source src="file.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="wave-line line-1"></div>
+    <div class="wave-line line-2"></div>
+    <div class="wave-line line-3"></div>
+    <div class="wave-line line-4"></div>
+    <div class="wave-line line-5"></div>
+
+    <div class="photo-frame">
+        <div class="photo-area">
+            <img src="" alt="" onerror="this.style.display='none'; document.getElementById('ph-tag').style.display='block';">
+            <div class="placeholder-text" id="ph-tag">✨ Photo Space ✨</div>
+        </div>
+        <div class="photo-message">
+            <span>May I request you to smile like this once more?</span>
+            <span class="careening-heart">💖</span>
+        </div>
+    </div>
+
+    <div class="btn-container">
+        <a href="index.html" class="nav-btn">
+            <span>⬅️</span> <span>Go Back</span>
+        </a>
+        <!-- Next Page button perfectly linked to page3.html -->
+        <a href="page3.html" class="nav-btn" id="next-page-btn3">
+            <span>Next Page</span> <span>➡️</span>
+        </a>
+    </div>
+
+    <script>
+        const audio = document.getElementById('page2-music');
+        const nextPageBtn3 = document.getElementById('next-page-btn3');
+
+        const playAudio = () => {
+            audio.play().then(() => {
+                document.removeEventListener('click', playAudio);
+                document.removeEventListener('touchstart', playAudio);
+            }).catch(error => {
+                console.log("Autoplay context waiting for user action...");
+            });
+        };
+
+        document.addEventListener('click', playAudio);
+        document.addEventListener('touchstart', playAudio);
+        window.addEventListener('DOMContentLoaded', playAudio);
+
+        // Next page par jaane se pehle audio stop karne ke liye
+        nextPageBtn3.addEventListener('click', () => {
+            audio.pause();
+            audio.currentTime = 0;
+        });
+    </script>
+
+</body>
+</html>

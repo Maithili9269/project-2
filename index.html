@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 1. The Moving Gradient Background */
+        body {
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            
+            background: linear-gradient(-45deg, #2b1810, #d4a373, #5c3d2e, #fefae0);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            
+            /* Standard clean font for the body text */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #ffffff;
+            text-align: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 2. The Flickering/Shining Light Overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,253,245,0.25) 0%, rgba(0,0,0,0) 70%);
+            pointer-events: none; 
+            z-index: 1;
+            animation: lightFlicker 6s infinite alternate ease-in-out;
+        }
+
+        @keyframes lightFlicker {
+            0% { opacity: 0.4; transform: scale(0.95); }
+            30% { opacity: 0.8; transform: scale(1.05); }
+            65% { opacity: 0.5; transform: scale(0.98); }
+            100% { opacity: 0.9; transform: scale(1.02); }
+        }
+
+        /* The frosted-glass box container */
+        .content {
+            position: relative;
+            z-index: 2;
+            text-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.15);
+            padding: 40px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 600px;
+        }
+
+        /* ONLY the H1 gets the cursive font and a beautiful large size */
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        /* Normal text styles for everything else */
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            margin-bottom: 25px;
+        }
+
+        /* Buttons ko ek sath badhiya se align karne ke liye layout */
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        /* Cozy Custom Music Button Styling */
+        .music-btn {
+            background-color: rgba(212, 163, 115, 0.3);
+            color: #ffffff;
+            border: 1px solid rgba(212, 163, 115, 0.6);
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .music-btn:hover {
+            background-color: rgba(212, 163, 115, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 163, 115, 0.4);
+        }
+
+        .music-btn:active {
+            transform: translateY(1px);
+        }
+
+        /* Naya Next Page Button Style jo aapke theme se match karega */
+        .next-btn {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 12px 26px;
+            font-size: 1rem;
+            border-radius: 50px;
+            text-decoration: none; /* Underline hatane ke liye */
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .next-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .next-btn:active {
+            transform: translateY(1px);
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bg-music" loop preload="auto">
+        <source src="ruby.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="content">
+        <h1>HAPPY BIRTHDAY! Nesumi 🤎</h1>
+        <h1>🎉                🎉</h1>
+        <p>May god bless you in every way he can.</p>
+        
+        <!-- Yahan dono buttons ko container ke andar set kar diya hai -->
+        <div class="btn-container">
+            <button class="music-btn" id="play-btn">
+                <span>🎵</span> <span id="btn-text">Play It</span>
+            </button>
+
+            <!-- Added id="next-page-btn" for stopping music -->
+            <a href="page2.html" class="next-btn" id="next-page-btn">
+                <span>Next Page</span> <span>➡️</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const music = document.getElementById('bg-music');
+        const playBtn = document.getElementById('play-btn');
+        const btnText = document.getElementById('btn-text');
+        const nextPageBtn = document.getElementById('next-page-btn'); // Link selected
+
+        const setButtonText = (label) => {
+            if (btnText) {
+                btnText.textContent = label;
+            }
+        };
+
+        playBtn.addEventListener('click', async () => {
+            if (music.paused) {
+                try {
+                    await music.play();
+                    setButtonText("Pause Audio");
+                } catch (error) {
+                    console.error("Playback failed:", error);
+                    setButtonText("Play It");
+                    alert("The browser blocked autoplay. Please click the page once, then press the button again.");
+                }
+            } else {
+                music.pause();
+                setButtonText("Play It");
+            }
+        });
+
+        // Next Page pe jaane se pehle ruby.mp3 ko band karega
+        nextPageBtn.addEventListener('click', () => {
+            music.pause();
+            music.currentTime = 0; // Song reset ho jayega
+        });
+    </script>
+
+</body>
+</html>
