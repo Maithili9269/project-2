@@ -29,7 +29,7 @@
             color: #ffffff;
             text-align: center;
             position: relative;
-            overflow-x: hidden;
+            overflow: hidden; /* Changed from overflow-x: hidden for beads */
         }
 
         @keyframes gradientShift {
@@ -57,6 +57,23 @@
             30% { opacity: 0.8; transform: scale(1.05); }
             65% { opacity: 0.5; transform: scale(0.98); }
             100% { opacity: 0.9; transform: scale(1.02); }
+        }
+
+        /* The Glossy Black Bead Styling */
+        .bead {
+            position: absolute;
+            top: -50px;
+            border-radius: 50%;
+            pointer-events: none;
+            background: radial-gradient(circle at 30% 30%, #ffffff 5%, #333333 20%, #000000 70%, #000000 100%);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            animation: fall linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(105vh); }
         }
 
         /* The frosted-glass box container */
@@ -90,7 +107,6 @@
             margin-bottom: 25px;
         }
 
-        /* Buttons ko ek sath badhiya se align karne ke liye layout */
         .btn-container {
             display: flex;
             justify-content: center;
@@ -99,7 +115,6 @@
             margin-top: 10px;
         }
 
-        /* Cozy Custom Music Button Styling */
         .music-btn {
             background-color: rgba(212, 163, 115, 0.3);
             color: #ffffff;
@@ -126,7 +141,6 @@
             transform: translateY(1px);
         }
 
-        /* Naya Next Page Button Style jo aapke theme se match karega */
         .next-btn {
             background-color: rgba(255, 255, 255, 0.15);
             color: #ffffff;
@@ -134,7 +148,7 @@
             padding: 12px 26px;
             font-size: 1rem;
             border-radius: 50px;
-            text-decoration: none; /* Underline hatane ke liye */
+            text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 8px;
@@ -165,13 +179,11 @@
         <h1>🎉                🎉</h1>
         <p>May god bless you in every way he can.</p>
         
-        <!-- Yahan dono buttons ko container ke andar set kar diya hai -->
         <div class="btn-container">
             <button class="music-btn" id="play-btn">
                 <span>🎵</span> <span id="btn-text">Play It</span>
             </button>
 
-            <!-- Added id="next-page-btn" for stopping music -->
             <a href="page2.html" class="next-btn" id="next-page-btn">
                 <span>Next Page</span> <span>➡️</span>
             </a>
@@ -179,15 +191,27 @@
     </div>
 
     <script>
+        // Bead Generator
+        for (let i = 0; i < 70; i++) {
+            const bead = document.createElement('div');
+            bead.className = 'bead';
+            const size = Math.random() * 14 + 10; 
+            bead.style.width = size + 'px';
+            bead.style.height = size + 'px';
+            bead.style.left = Math.random() * 100 + '%';
+            bead.style.animationDuration = (Math.random() * 6 + 7) + 's';
+            bead.style.animationDelay = Math.random() * 10 + 's';
+            document.body.appendChild(bead);
+        }
+
+        // Music Logic
         const music = document.getElementById('bg-music');
         const playBtn = document.getElementById('play-btn');
         const btnText = document.getElementById('btn-text');
-        const nextPageBtn = document.getElementById('next-page-btn'); // Link selected
+        const nextPageBtn = document.getElementById('next-page-btn');
 
         const setButtonText = (label) => {
-            if (btnText) {
-                btnText.textContent = label;
-            }
+            if (btnText) btnText.textContent = label;
         };
 
         playBtn.addEventListener('click', async () => {
@@ -197,8 +221,7 @@
                     setButtonText("Pause Audio");
                 } catch (error) {
                     console.error("Playback failed:", error);
-                    setButtonText("Play It");
-                    alert("The browser blocked autoplay. Please click the page once, then press the button again.");
+                    alert("Click the page once to enable audio.");
                 }
             } else {
                 music.pause();
@@ -206,12 +229,10 @@
             }
         });
 
-        // Next Page pe jaane se pehle ruby.mp3 ko band karega
         nextPageBtn.addEventListener('click', () => {
             music.pause();
-            music.currentTime = 0; // Song reset ho jayega
+            music.currentTime = 0;
         });
     </script>
-
 </body>
 </html>
